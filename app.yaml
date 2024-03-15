@@ -1,0 +1,22 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: example-nginx-app
+spec:
+  interval: 30s
+  ref:
+    branch: main
+  url: https://gitlab.com/gitlab-examples/ops/gitops-demo/example-mini-flux-deployment.git
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: example-nginx-app
+spec:
+  interval: 30s
+  path: ./manifests
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: example-nginx-app
